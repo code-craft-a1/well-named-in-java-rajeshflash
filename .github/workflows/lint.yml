@@ -8,17 +8,32 @@ jobs:
     
     steps:
       - uses: actions/checkout@v4
-      
       - name: Setup JDK
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '21'
-      
       - name: Setup PMD
         run: |
           wget https://github.com/pmd/pmd/releases/download/pmd_releases%2F6.55.0/pmd-bin-6.55.0.zip
           unzip pmd-bin-6.55.0.zip
+      - name: Cache Gradle packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.gradle/caches
+          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            gradle-${{ runner.os }}
+      - name: Grant execute permission to Gradle wrapper
+        run: chmod +x ./gradlew
+  
+      - name: Run SpotBugs
+        run: ./gradlew spotbugsMain
+        continue-on-error: true
+
+      - name: Run Checkstyle
+        run: ./gradlew checkstyleMain
+        continue-on-error: true
 
       - name: PMD
         run: |
@@ -31,11 +46,3 @@ jobs:
             echo "PMD check passed!"
           fi
         continue-on-error: true
-      
-      - name: SpotBugs
-        run: mvn spotbugs:check || echo "::warning::SpotBugs found potential bugs, check reports"
-        continue-on-error: true
-      
-      - name: Checkstyle
-        run: mvn checkstyle:check || echo "::warning::Checkstyle found code style issues"
-      
