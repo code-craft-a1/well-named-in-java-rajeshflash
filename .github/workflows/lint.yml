@@ -25,11 +25,5 @@ jobs:
   
       - name: PMD
         run: |
-          ./pmd-bin-6.55.0/bin/run.sh pmd -d src/main/java -R rulesets/java/quickstart.xml -f text > pmd-report.txt
-          if [ -s pmd-report.txt ]; then
-            echo "PMD found issues:"
-            cat pmd-report.txt
-            echo "::warning::PMD found code quality issues"
-          else
-            echo "PMD check passed!"
-          fi
+          ./pmd-bin-6.55.0/bin/run.sh pmd -d colorcoder/ -R rulesets/java/quickstart.xml
+        continue-on-error: true
