@@ -71,7 +71,7 @@ public final class Main {
         public MinorColor getMinor() {
             return minorColor;
         }
-        String ToString() {
+        String getColorPairName() {
             String colorPairStr = MajorColorNames[majorColor.getIndex()];
             colorPairStr += " ";
             colorPairStr += MinorColorNames[minorColor.getIndex()];
@@ -96,7 +96,7 @@ public final class Main {
         MinorColor expectedMinor)
     {
         ColorPair colorPair = getColorFromPairNumber(pairNumber);
-        System.out.println("Got pair " + colorPair.ToString());
+        System.out.println("Got pair " + colorPair.getColorPairName());
         assert colorPair.getMajor() == expectedMajor;
         assert colorPair.getMinor() == expectedMinor;
     }
