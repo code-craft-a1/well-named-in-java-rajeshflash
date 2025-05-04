@@ -11,12 +11,12 @@ public final class Main {
         MajorColor(int index) {
             this.index = index;
         }
-        int getIndex() {
+        int getColorIndex() {
             return index;
         }
-        public static MajorColor fromIndex(int index) {
+        public static MajorColor fromColorIndex(int index) {
             for(MajorColor color: MajorColor.values()) {
-                if(color.getIndex() == index) {
+                if(color.getColorIndex() == index) {
                     return color;
                 }
             }
@@ -34,12 +34,12 @@ public final class Main {
         MinorColor(int index) {
             this.index = index;
         }
-        int getIndex() {
+        int getColorIndex() {
             return index;
         }
-        public static MinorColor fromIndex(int index) {
+        public static MinorColor fromColorIndex(int index) {
             for(MinorColor color: MinorColor.values()) {
-                if(color.getIndex() == index) {
+                if(color.getColorIndex() == index) {
                     return color;
                 }
             }
@@ -65,16 +65,16 @@ public final class Main {
             majorColor = major;
             minorColor = minor;
         }
-        public MajorColor getMajor() {
+        public MajorColor getMajorColor() {
             return majorColor;
         }
-        public MinorColor getMinor() {
+        public MinorColor getMinorColor() {
             return minorColor;
         }
         String getColorPairName() {
-            String colorPairStr = MajorColorNames[majorColor.getIndex()];
+            String colorPairStr = MajorColorNames[majorColor.getColorIndex()];
             colorPairStr += " ";
-            colorPairStr += MinorColorNames[minorColor.getIndex()];
+            colorPairStr += MinorColorNames[minorColor.getColorIndex()];
             return colorPairStr;
         }
     }
@@ -82,13 +82,13 @@ public final class Main {
     static ColorPair getColorFromPairNumber(int pairNumber) {
         int zeroBasedPairNumber = pairNumber - 1;
         MajorColor majorColor = 
-            MajorColor.fromIndex(zeroBasedPairNumber / numberOfMinorColors);
+            MajorColor.fromColorIndex(zeroBasedPairNumber / numberOfMinorColors);
         MinorColor minorColor =
-            MinorColor.fromIndex(zeroBasedPairNumber % numberOfMinorColors);
+            MinorColor.fromColorIndex(zeroBasedPairNumber % numberOfMinorColors);
         return new ColorPair(majorColor, minorColor);
     }
     static int getPairNumberFromColor(MajorColor major, MinorColor minor) {
-        return major.getIndex() * numberOfMinorColors + minor.getIndex() + 1;
+        return major.getColorIndex() * numberOfMinorColors + minor.getColorIndex() + 1;
     }
 
     static void testNumberToPair(int pairNumber,
@@ -97,8 +97,8 @@ public final class Main {
     {
         ColorPair colorPair = getColorFromPairNumber(pairNumber);
         System.out.println("Got pair " + colorPair.getColorPairName());
-        assert colorPair.getMajor() == expectedMajor;
-        assert colorPair.getMinor() == expectedMinor;
+        assert colorPair.getMajorColor() == expectedMajor;
+        assert colorPair.getMinorColor() == expectedMinor;
     }
 
     static void testPairToNumber(
